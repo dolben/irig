@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+#-----------------------------------------------------
+# test the IRIG Decoder with various build options
+
+function check() {
+    make clean
+    if ./try
+    then echo PASSED
+    else echo FAILED
+         RESULT=1
+    fi
+    echo
+}
+
+RESULT=0
+
+cp inputb input
+IRIG_SAMPLES=10 ADDED_CFLAGS=-DDEBUG check
+IRIG_SAMPLES=24 check
+ADDED_CFLAGS=-DIRIG_LSBIT_FIRST check
+cp inputd input
+ADDED_CFLAGS="-DIRIG_POSITIONS=6 -DIRIG_FORMAT=IRIG_D" check
+cp inputg input
+ADDED_CFLAGS=-DIRIG_FORMAT=IRIG_G check
+cp inputa input
+ADDED_CFLAGS=-DIRIG_FORMAT=IRIG_A check
+cp inputb input
+check
+
+exit $RESULT
+

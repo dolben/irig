@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#-----------------------------------------------------
+# test the IRIG Decoder with build options from env
+
+make && ./irigTest <input >output && diff input output
+
